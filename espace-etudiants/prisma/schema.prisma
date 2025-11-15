@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL_ETUDIANTS")
+}
+
+model student {
+  id         Int      @id @default(autoincrement())
+  nom        String
+  prenom     String
+  email      String   @unique
+  password   String
+  matricule  String
+  filiere    String
+  section    String
+  annee      String
+  photo      String?
+  createdAt  DateTime @default(now())
+
+  notes      note[]
+  recours    recours[]
+}
+
+model emploi_temps {
+  id          Int      @id @default(autoincrement())
+  titre       String
+  filiere     String
+  section     String
+  annee       String
+  fichierPDF  String?
+  createdAt   DateTime @default(now())
+}
+
+model cours {
+  id          Int      @id @default(autoincrement())
+  titre       String
+  description String?
+  fichierPDF  String?
+  enseignant  String
+  filiere     String
+  section     String
+  annee       String
+  createdAt   DateTime @default(now())
+}
+
+model note {
+  id          Int      @id @default(autoincrement())
+  studentId   Int
+  matiere     String
+  note        Float
+  semestre    String
+  createdAt   DateTime @default(now())
+
+  student     student @relation(fields: [studentId], references: [id])
+}
+
+model recours {
+  id          Int      @id @default(autoincrement())
+  studentId   Int
+  matiere     String
+  message     String
+  statut      String   @default("En attente")
+  enseignant  String?
+  createdAt   DateTime @default(now())
+
+  student     student @relation(fields: [studentId], references: [id])
+}

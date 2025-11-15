@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+ 
+  output   = "../node_modules/.prisma/main-client"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL_PORTAL")
+}
+
+
+
+model Contenu {
+  id        Int      @id @default(autoincrement())
+  page      String   @unique
+  titre     String?
+  texte     String?
+  image     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Programme {
+  id          Int      @id @default(autoincrement())
+  titre       String
+  description String
+  niveau      String?
+  details     String?
+  createdAt   DateTime @default(now())
+}
+
+model Actualite {
+  id        Int      @id @default(autoincrement())
+  titre     String
+  description String
+  imageUrl String   @db.VarChar(1000)
+  auteur    String
+  date      DateTime @default(now())
+  createdAt DateTime @default(now())
+}
+
+model ContactMessage {
+  id        Int      @id @default(autoincrement())
+  fullName  String
+  email     String
+  subject   String
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Accueil {
+  id        Int      @id @default(autoincrement())
+  titre     String
+  contenu   String
+  imageUrl  String?   // facultatif, image de présentation
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+

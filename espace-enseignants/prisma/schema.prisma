@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/teacher-client"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL_ENSEIGNANTS")
+}
+
+model teacher {
+  id              Int      @id @default(autoincrement())
+  nom             String
+  prenom          String
+  grade           String?
+  specialite      String?
+  email           String   @unique
+  password        String
+  matricule       String?
+  module_enseigne String?
+  photo           String?
+  createdAt       DateTime @default(now())
+
+  // Relations
+  cours       Cours[]
+  notes       Note[]
+  emplois     EmploiDuTemps[]
+  recours     Recours[]
+}
+
+model Cours {
+  id          Int      @id @default(autoincrement())
+  titre       String
+  description String?
+  fichier     String?
+  date_upload DateTime @default(now())
+  enseignant  teacher  @relation(fields: [enseignantId], references: [id])
+  enseignantId Int
+}
+
+model Note {
+  id           Int      @id @default(autoincrement())
+  etudiantId   Int
+  nomEtudiant  String
+  note         Float
+  module       String
+  date_saisie  DateTime @default(now())
+  enseignant   teacher  @relation(fields: [enseignantId], references: [id])
+  enseignantId Int
+}
+
+model EmploiDuTemps {
+  id           Int      @id @default(autoincrement())
+  jour         String
+  heure_debut  String
+  heure_fin    String
+  module       String
+  salle        String
+  enseignant   teacher  @relation(fields: [enseignantId], references: [id])
+  enseignantId Int
+}
+
+model Recours {
+  id            Int      @id @default(autoincrement())
+  etudiantId    Int
+  nomEtudiant   String
+  objet         String
+  contenu       String
+  statut        String   @default("En attente")
+  date_envoi    DateTime @default(now())
+  enseignant    teacher  @relation(fields: [enseignantId], references: [id])
+  enseignantId  Int
+}
