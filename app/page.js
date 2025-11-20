@@ -197,6 +197,11 @@ useEffect(() => {
     { name: "Kamel R.", role: "Chercheur", text: "Encadrement de haute qualité et opportunités de collaboration internationales." },
     { name: "Nour E.", role: "Étudiante - Master", text: "Ambiance stimulante, enseignants accessibles et projets concrets." },
   ];
+  // === Style commun pour les boutons Login + Langue ===
+const commonButtonClass =
+  "flex items-center justify-center gap-2 rounded-full font-semibold " +
+  "h-11 px-6 text-sm transition-all duration-200";
+
   useEffect(() => {
     const interval = setInterval(() => {
       setTestimonialIndex((prev) => (prev + 1) % testimonials.length);
@@ -254,10 +259,9 @@ const partners = [
 
 {/* Header */}
 <header
-  className={`w-full fixed top-0 z-50 transition-all duration-300 ${
-    scrolled ? "bg-white/90 backdrop-blur-lg shadow-md" : "bg-transparent"
-  }`}
+  className="w-full fixed top-0 z-50 transition-all duration-300 bg-[#E9F4FF] shadow-sm"
 >
+
   <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-20">
     {/* Left section */}
     <div className="flex items-center gap-4">
@@ -270,18 +274,34 @@ const partners = [
       </button>
 
       <a href="#" className="flex items-center gap-3 no-underline">
-        <div className="w-16 h-16 rounded-xl overflow-hidden border-2 border-blue-700">
-          <img
-            src="https://inscription.esss.dz/images/Logo-esss-300x300.png?v=1"
-            alt="Logo"
-            className="w-full h-full object-cover"
-          />
-        </div>
+        <div className="w-16 h-16 rounded-xl overflow-hidden">
+  <img
+    src="https://inscription.esss.dz/images/Logo-esss-300x300.png?v=1"
+    alt="Logo"
+    className="w-full h-full object-cover"
+  />
+</div>
+
         <div className="hidden sm:block">
-          <span className="block font-bold text-lg text-blue-800">ESSS</span>
-          <span className="text-sm text-red-800">
-            École Supérieure de la Sécurité Sociale
-          </span>
+         <div className="flex items-center gap-3">
+  <span className="block font-bold text-lg text-blue-800">ESSS</span>
+
+  {/* Badge Algérie */}
+  <span
+    className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold"
+    style={{ backgroundColor: "#0D5E36", color: "white" }}
+  >
+    🇩🇿 Algérie
+  </span>
+</div>
+
+          <span
+  className="text-sm font-medium"
+  style={{ color: "#205811ff" }}
+>
+  École Supérieure de la Sécurité Sociale
+</span>
+
         </div>
       </a>
     </div>
@@ -307,17 +327,25 @@ const partners = [
     <div className="flex items-center gap-4">
       {/* Langue button */}
       <div className="relative" ref={translateRef}>
-        <button
-          onClick={() => setTranslateOpen((s) => !s)}
-          aria-haspopup="menu"
-          aria-expanded={translateOpen}
-          className="ml-2 flex items-center gap-2 border border-slate-200 rounded-full px-3 py-1 bg-white text-sm shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-300"
-          title="Choisir la langue"
-        >
-          <Globe size={16} className="text-blue-800" />
-          <span className="hidden sm:inline">Langue</span>
-          <ChevronDown size={16} />
-        </button>
+       <button
+  onClick={() => setTranslateOpen((s) => !s)}
+  aria-haspopup="menu"
+  aria-expanded={translateOpen}
+  className={commonButtonClass + " border"}
+  style={{
+    backgroundColor: "#3F7F2F10",
+    borderColor: "#3F7F2F40",
+    color: "#195e08ff",
+  }}
+>
+  <Globe size={16} style={{ color: "#3F7F2F" }} />
+  <span className="hidden sm:inline">Langue</span>
+  <ChevronDown size={16} style={{ color: "#3F7F2F" }} />
+</button>
+
+
+
+        
 
         <AnimatePresence>
           {translateOpen && (
@@ -364,12 +392,22 @@ const partners = [
 
 {/* Login Dropdown */}
 <div className="relative" ref={loginRef}>
-  <button
-    onClick={() => setLoginOpen((s) => !s)}
-    className="bg-gradient-to-r from-blue-700  to-teal-500 text-white font-semibold px-5 py-2.5 rounded-full shadow-lg hover:shadow-blue-300/50 transition-all duration-300 flex items-center gap-2 hover:scale-105"
-  >
-    Login <ChevronDown size={16} className="text-white drop-shadow-sm" />
-  </button>
+<button
+  onClick={() => setLoginOpen((s) => !s)}
+  className={commonButtonClass + " shadow-md hover:shadow-lg hover:scale-[1.03] "}
+  style={{
+    backgroundColor: "#155307ff",
+    color: "white",
+  }}
+>
+  Login
+  <ChevronDown size={16} style={{ color: "white" }} />
+</button>
+
+
+
+
+
 
   <AnimatePresence>
     {loginOpen && (
